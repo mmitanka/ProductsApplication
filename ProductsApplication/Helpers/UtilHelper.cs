@@ -26,10 +26,9 @@ namespace ProductsApplication.Helpers
             return categoryList;
         }
 
-        public static List<KeyValuePair<int, string>> CreateManufacturerList(ProductsAppDBContext context)
+        public static List<KeyValuePair<int, string>> CreateManufacturerList(List<Manufacturer> manufacturers)
         {
             List<KeyValuePair<int, string>> manufacturerList = new List<KeyValuePair<int, string>>();
-            List<Manufacturer> manufacturers = context.Manufacturers.ToList();
 
             foreach(var manufacturer in manufacturers)
             {
@@ -39,10 +38,9 @@ namespace ProductsApplication.Helpers
             return manufacturerList;
         }
 
-        public static List<KeyValuePair<int, string>> CreateSupplierList(ProductsAppDBContext context)
+        public static List<KeyValuePair<int, string>> CreateSupplierList(List<Supplier> suppliers)
         {
             List<KeyValuePair<int, string>> supplierList = new List<KeyValuePair<int, string>>();
-            List<Supplier> suppliers = context.Suppliers.ToList();
 
             foreach(var supplier in suppliers)
             {

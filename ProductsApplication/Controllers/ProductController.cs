@@ -12,12 +12,14 @@ namespace ProductsApplication.Controllers
 {
     public class ProductController : Controller
     {
-        ProductsAppDBContext _context = new ProductsAppDBContext();
+        private readonly ProductsRepository productsRepository = new ProductsRepository();
+        private readonly ManufacturerRepository manufacturerRepository = new ManufacturerRepository();
+        private readonly SupplierRepository supplierRepository = new SupplierRepository();
 
         [HttpGet]
         public ActionResult Index()
         {
-            List<Product> productList = _context.Products.ToList();
+            List<Product> productList = productsRepository.GetProducts();
             List<ProductViewModel> productViewModelList = new List<ProductViewModel>();
 
             foreach (var product in productList)
@@ -42,7 +44,10 @@ namespace ProductsApplication.Controllers
         [HttpGet]
         public ActionResult CreateProduct()
         {
-            ProductViewModel productViewModel = new ProductViewModel(_context);
+            List<Manufacturer> manufacturers = manufacturerRepository.GetManufacturers();
+            List<Supplier> suppliers = supplierRepository.GetSuppliers();
+
+            ProductViewModel productViewModel = new ProductViewModel(manufacturers, suppliers);
 
             return View(productViewModel);
         }
@@ -52,16 +57,16 @@ namespace ProductsApplication.Controllers
         {
             if(ModelState.IsValid)
             {
-                Product product = new Product(productViewModel);
-
-                _context.Products.Add(product);
-                _context.SaveChanges();
+                productsRepository.CreateProduct(productViewModel);
 
                 return RedirectToAction("Index");
             }
 
             // Product is not created, errors exist
-            productViewModel.CreateProductLists(_context);
+            List<Manufacturer> manufacturers = manufacturerRepository.GetManufacturers();
+            List<Supplier> suppliers = supplierRepository.GetSuppliers();
+
+            productViewModel.CreateProductLists(manufacturers, suppliers);
 
             return View(productViewModel);
         }
@@ -69,13 +74,15 @@ namespace ProductsApplication.Controllers
         [HttpGet]
         public ActionResult EditProduct(int productID)
         {
-            Product product = _context.Products.Where(p => p.ID == productID).FirstOrDefault();
+            Product product = productsRepository.Get(productID);
 
             if(product != null)
             {
+                List<Manufacturer> manufacturers = manufacturerRepository.GetManufacturers();
+                List<Supplier> suppliers = supplierRepository.GetSuppliers();
                 ProductViewModel productViewModel = new ProductViewModel(product);
 
-                productViewModel.CreateProductLists(_context);
+                productViewModel.CreateProductLists(manufacturers, suppliers);
 
                 return View(productViewModel);
             }
@@ -86,26 +93,22 @@ namespace ProductsApplication.Controllers
         [HttpPost]
         public ActionResult EditProduct(ProductViewModel productViewModel)
         {
-            Product product = _context.Products.Where(p => p.ID == productViewModel.ID).FirstOrDefault();
+            Product product = productsRepository.Get(productViewModel.ID);
 
             if(product != null)
             {
                 if (ModelState.IsValid)
                 {
-                    product.Name = productViewModel.Name;
-                    product.Description = productViewModel.Description;
-                    product.Category = productViewModel.CategoryID;
-                    product.ManufacturerID = productViewModel.ManufacturerID;
-                    product.SupplierID = productViewModel.SupplierID;
-                    product.Price = product.Price;
-
-                    _context.SaveChanges();
+                    productsRepository.EditProduct(product, productViewModel);
 
                     return RedirectToAction("Index");
                 }
 
                 // Product is not edited, errors exist
-                productViewModel.CreateProductLists(_context);
+                List<Manufacturer> manufacturers = manufacturerRepository.GetManufacturers();
+                List<Supplier> suppliers = supplierRepository.GetSuppliers();
+
+                productViewModel.CreateProductLists(manufacturers, suppliers);
 
                 return View(productViewModel);
             }

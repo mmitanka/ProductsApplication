@@ -161,9 +161,11 @@
     </Compile>
     <Compile Include="Helpers\JSONHelper.cs" />
     <Compile Include="Helpers\UtilHelper.cs" />
+    <Compile Include="Models\ContextProvider.cs" />
     <Compile Include="Models\Manufacturer.cs">
       <DependentUpon>ProductsApplication.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ManufacturerRepository.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>ProductsApplication.tt</DependentUpon>
     </Compile>
@@ -182,9 +184,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductsApplication.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductsRepository.cs" />
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>ProductsApplication.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SupplierRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>

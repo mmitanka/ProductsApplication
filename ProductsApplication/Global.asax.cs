@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProductsApplication.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,24 @@ namespace ProductsApplication
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        protected virtual void Application_BeginRequest()
+        {
+            if (!HttpContext.Current.Items.Contains("_EntityContext"))
+            {
+                HttpContext.Current.Items["_EntityContext"] = new ProductsAppDBContext();
+            }
+        }
+
+        protected void Application_EndRequest(object sender, EventArgs e)
+        {
+            var entityContext = HttpContext.Current.Items["_EntityContext"] as ProductsAppDBContext;
+
+            if (entityContext != null)
+            {
+                entityContext.Dispose();
+            }
         }
     }
 }

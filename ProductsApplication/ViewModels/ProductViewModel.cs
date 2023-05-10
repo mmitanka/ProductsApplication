@@ -77,25 +77,28 @@ namespace ProductsApplication.ViewModels
             Name = product.Name;
             Description = string.IsNullOrEmpty(product.Description) ? "" : product.Description;
             Category = ((ProductCategory)product.Category).ToString();
+            CategoryID = product.Category;
             ManufacturerName = product.Manufacturer.Name;
+            ManufacturerID = product.ManufacturerID;
             SupplierName = product.Supplier.Name;
+            SupplierID = product.SupplierID;
             Price = product.Price;
         }
 
-        public ProductViewModel(ProductsAppDBContext context)
+        public ProductViewModel(List<Manufacturer> manufacturers, List<Supplier> suppliers)
         {
-            CreateProductLists(context);
+            CreateProductLists(manufacturers, suppliers);
         }
 
         #endregion Constructors
 
         #region Methods
 
-        public void CreateProductLists(ProductsAppDBContext context)
+        public void CreateProductLists(List<Manufacturer> manufacturers, List<Supplier> suppliers)
         {
             CategoryList = UtilHelper.CreateCategoryList();
-            ManufacturerList = UtilHelper.CreateManufacturerList(context);
-            SupplierList = UtilHelper.CreateSupplierList(context);
+            ManufacturerList = UtilHelper.CreateManufacturerList(manufacturers);
+            SupplierList = UtilHelper.CreateSupplierList(suppliers);
         }
 
         #endregion Methods
