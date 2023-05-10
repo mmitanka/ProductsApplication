@@ -13,10 +13,10 @@ namespace ProductsApplication.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class productsAppDBContext1 : DbContext
+    public partial class ProductsAppDBContext : DbContext
     {
-        public productsAppDBContext1()
-            : base("name=productsAppDBContext1")
+        public ProductsAppDBContext()
+            : base("name=ProductsAppDBContext")
         {
         }
     

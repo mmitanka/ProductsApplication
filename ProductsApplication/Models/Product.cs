@@ -9,6 +9,7 @@
 
 namespace ProductsApplication.Models
 {
+    using ProductsApplication.ViewModels;
     using System;
     using System.Collections.Generic;
     
@@ -24,5 +25,20 @@ namespace ProductsApplication.Models
     
         public virtual Manufacturer Manufacturer { get; set; }
         public virtual Supplier Supplier { get; set; }
+
+        public Product()
+        {
+
+        }
+
+        public Product(ProductViewModel productViewModel)
+        {
+            Name = productViewModel.Name;
+            Description = productViewModel.Description;
+            Category = productViewModel.CategoryID;
+            ManufacturerID = productViewModel.ManufacturerID;
+            SupplierID = productViewModel.SupplierID;
+            Price = productViewModel.Price;
+        }
     }
 }

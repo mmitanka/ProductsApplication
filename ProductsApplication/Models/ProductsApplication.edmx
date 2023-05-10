@@ -127,7 +127,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="productsAppDBContext1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ProductsAppDBContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Manufacturers" EntityType="Self.Manufacturer" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
@@ -145,7 +145,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="productsAppDBModelStoreContainer" CdmEntityContainer="productsAppDBContext1">
+        <EntityContainerMapping StorageEntityContainer="productsAppDBModelStoreContainer" CdmEntityContainer="ProductsAppDBContext">
           <EntitySetMapping Name="Manufacturers">
             <EntityTypeMapping TypeName="productsAppDBModel.Manufacturer">
               <MappingFragment StoreEntitySet="Manufacturers">
