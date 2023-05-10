@@ -21,6 +21,8 @@ namespace ProductsApplication.ViewModels
     {
         #region Properties
 
+        public int ID { get; set; }
+
         [JsonProperty("name")]
         [Required]
         [StringLength(50, ErrorMessage = "Name cannot be longer than 50 characters.")]
@@ -71,6 +73,7 @@ namespace ProductsApplication.ViewModels
 
         public ProductViewModel(Product product)
         {
+            ID = product.ID;
             Name = product.Name;
             Description = string.IsNullOrEmpty(product.Description) ? "" : product.Description;
             Category = ((ProductCategory)product.Category).ToString();

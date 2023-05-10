@@ -65,5 +65,52 @@ namespace ProductsApplication.Controllers
 
             return View(productViewModel);
         }
+
+        [HttpGet]
+        public ActionResult EditProduct(int productID)
+        {
+            Product product = _context.Products.Where(p => p.ID == productID).FirstOrDefault();
+
+            if(product != null)
+            {
+                ProductViewModel productViewModel = new ProductViewModel(product);
+
+                productViewModel.CreateProductLists(_context);
+
+                return View(productViewModel);
+            }
+
+            return View("~/Views/Shared/Error.cshtml");
+        }
+
+        [HttpPost]
+        public ActionResult EditProduct(ProductViewModel productViewModel)
+        {
+            Product product = _context.Products.Where(p => p.ID == productViewModel.ID).FirstOrDefault();
+
+            if(product != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    product.Name = productViewModel.Name;
+                    product.Description = productViewModel.Description;
+                    product.Category = productViewModel.CategoryID;
+                    product.ManufacturerID = productViewModel.ManufacturerID;
+                    product.SupplierID = productViewModel.SupplierID;
+                    product.Price = product.Price;
+
+                    _context.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+
+                // Product is not edited, errors exist
+                productViewModel.CreateProductLists(_context);
+
+                return View(productViewModel);
+            }
+
+            return View("~/Views/Shared/Error.cshtml");
+        }
     }
 }

@@ -26,16 +26,20 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var productViewModel in Model)
+                @if (Model != null)
                 {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => productViewModel.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => productViewModel.Description)</td>
-                        <td>@Html.DisplayFor(modelItem => productViewModel.Category)</td>
-                        <td>@Html.DisplayFor(modelItem => productViewModel.ManufacturerName)</td>
-                        <td>@Html.DisplayFor(modelItem => productViewModel.SupplierName)</td>
-                        <td>@Html.DisplayFor(modelItem => productViewModel.Price)</td>
-                    </tr>
+                    foreach (var productViewModel in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => productViewModel.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => productViewModel.Description)</td>
+                            <td>@Html.DisplayFor(modelItem => productViewModel.Category)</td>
+                            <td>@Html.DisplayFor(modelItem => productViewModel.ManufacturerName)</td>
+                            <td>@Html.DisplayFor(modelItem => productViewModel.SupplierName)</td>
+                            <td>@Html.DisplayFor(modelItem => productViewModel.Price)</td>
+                            <td>@Html.ActionLink("Edit", "EditProduct", new { productID = productViewModel.ID })</td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>

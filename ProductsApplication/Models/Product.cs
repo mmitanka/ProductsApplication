@@ -35,6 +35,7 @@ namespace ProductsApplication.Models
         {
             Name = productViewModel.Name;
             Description = productViewModel.Description;
+            Category = productViewModel.CategoryID;
             ManufacturerID = productViewModel.ManufacturerID;
             SupplierID = productViewModel.SupplierID;
             Price = productViewModel.Price;
