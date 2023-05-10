@@ -160,6 +160,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\JSONHelper.cs" />
+    <Compile Include="Helpers\UtilHelper.cs" />
     <Compile Include="Models\Manufacturer.cs">
       <DependentUpon>ProductsApplication.tt</DependentUpon>
     </Compile>
@@ -241,6 +242,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\GetProductsFromJSON.cshtml" />
+    <Content Include="Views\Product\CreateProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

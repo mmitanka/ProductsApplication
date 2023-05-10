@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ProductsApplication.Helpers;
 using ProductsApplication.Models;
 using System;
 using System.Collections.Generic;
@@ -18,29 +19,46 @@ namespace ProductsApplication.ViewModels
 
     public class ProductViewModel
     {
-        #region  Properties
+        #region Properties
 
         [JsonProperty("name")]
+        [Required]
+        [StringLength(50, ErrorMessage = "Name cannot be longer than 50 characters.")]
         public string Name { get; set; }
 
         [JsonProperty("description")]
+        [StringLength(250, ErrorMessage = "Description cannot be longer than 250 characters.")]
         public string Description { get; set; }
 
         [JsonProperty("category")]
         public string Category { get; set; }
 
+        [Required]
+        public int CategoryID { get; set; }
+
+        public List<KeyValuePair<int, string>> CategoryList { get; set; }
+
         [JsonProperty("manufacturerName")]
-        [Display(Name = "Manufacturer Name")]
+        [Display(Name = "Manufacturer")]
         public string ManufacturerName { get; set; }
 
+        [Required(ErrorMessage = "The Manufacturer field is required.")]
+        public int ManufacturerID { get; set; }
+
+        public List<KeyValuePair<int, string>> ManufacturerList { get; set; }
+
         [JsonProperty("supplierName")]
-        [Display(Name = "Supplier Name")]
+        [Display(Name = "Supplier")]
         public string SupplierName { get; set; }
 
-        [JsonProperty("price")]
-        public double Price { get; set; }
+        [Required(ErrorMessage = "The Supplier field is required.")]
+        public int SupplierID { get; set; }
 
-        public const string PATH_TO_PRODUCTS_JSON_FILE = "~/Content/products.json";
+        public List<KeyValuePair<int, string>> SupplierList { get; set; }
+
+        [JsonProperty("price")]
+        [Required]
+        public double Price { get; set; }
 
         #endregion Properties
 
@@ -61,6 +79,22 @@ namespace ProductsApplication.ViewModels
             Price = product.Price;
         }
 
+        public ProductViewModel(ProductsAppDBContext context)
+        {
+            CreateProductLists(context);
+        }
+
         #endregion Constructors
+
+        #region Methods
+
+        public void CreateProductLists(ProductsAppDBContext context)
+        {
+            CategoryList = UtilHelper.CreateCategoryList();
+            ManufacturerList = UtilHelper.CreateManufacturerList(context);
+            SupplierList = UtilHelper.CreateSupplierList(context);
+        }
+
+        #endregion Methods
     }
 }
